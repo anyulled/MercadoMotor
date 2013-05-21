@@ -1,0 +1,72 @@
+{% set ayer = "now"|date('Y') - 100 %}
+<div class="pro_tabs-horz-top" id='tabs'>
+    <ul class="pro_tabs-nav">
+        <li><a href="#tabs-1">Carros Usados</a></li>
+    </ul>
+    <div id="tabs-1" class="pro_tab-content">
+        <form id="pro_form1" action="{{ constant('ROOT') ~ "/busqueda.php#resultados"}}" name="busqueda" method="get">
+            <div class="container_12">
+                <div class="grid_4">
+                    <label for="marcas">
+                        <span class="pro_text-form">Marca</span>
+                        <select name="idMarca" id="marcas">
+                            <option value="">--</option>
+                        </select>
+                    </label>
+                    <label for="fecha_min">
+                        <span class="pro_text-form">Año</span>
+                        <select name="anio_min" id="fecha_min" class="min">
+                            <option value=""> -- </option>
+                            {% for fecha in range("now"|date('Y'), ayer) %}
+                            <option>{{ fecha }}</option>
+                            {% endfor %}
+                        </select>
+                        a
+                        <select name="anio_max" id="fecha_max" class="min">
+                            <option value=""> -- </option>
+                            {% for fecha in range("now"|date('Y'), ayer) %}
+                            <option>{{ fecha }}</option>
+                            {% endfor %}
+                        </select>
+                    </label>
+                </div>
+                <div class="grid_4">
+                    <label for="modelos">
+                        <span class="pro_text-form">Modelo</span>
+                        <select name="idModelo" id="modelos">
+                            <option value="">--</option>
+                        </select>
+                    </label>
+                    <label for="precio">
+                        <span class="pro_text-form">Precio</span>
+                        <input class="digits min" id="precio_min" type="text" name="preciomin" value="" maxlength="10" size="10"/>
+                        <span> a </span>
+                        <input class="digits min" id="precio_max" type="text" name="preciomax" value="" maxlength="10" size="10"/>
+                    </label>
+                </div>
+                <div class="grid_4">
+                    <label for="estado">
+                        <span class="pro_text-form">Estado</span>
+                        <select name="estado" id="estado">
+                            <option value="null">--</option>
+                        </select>
+                    </label>
+                    <label for="tipo_vehiculo">
+                        <span class="pro_text-form">Tipo</span>
+                        <select name="tipo_vehiculo" id="tipo_vehiculo" class="required">
+                        {% for tipo in tipoVehiculo.data %}
+                                <option value="{{ tipo.idtipovehiculo }}">{{tipo.tipovehiculo }}</option>
+                        {%endfor%}
+                            </select>
+                        </label>
+                    </div>
+            </div>
+            <div class="container_12">
+                <div class="grid_12 pro_btns">
+                    <input class="pro_btn pro_inf" id="buscar_carro" type="submit" name="submit" value="buscar"/>
+                </div>
+            </div>
+        </form>
+            <div class="clear"></div>
+    </div>
+</div>

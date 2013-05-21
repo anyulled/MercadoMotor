@@ -1,0 +1,30 @@
+<div class="floatbox" style="padding-top: 10px;">
+    <div class="c62l">
+        <div class="floatbox">
+            <h1 class="titulo">Noticias</h1>
+        </div>
+        <div class="floatbox">
+        {% for item in feed %}
+            <div class="Noticia">
+                <div>
+                    <p class="{{ loop.index0 % 2 == 0 ? 'icaption_left' : 'icaption_right' }}" style="max-width:15%">
+                        <img src="{{ dame_imagen_noticia(item.contenido,item.fuente) }}" alt="{{ item.fuente }}"/>
+                    </p>
+                    <h4 class="tituloNoticia"> {{ item.titulo }}</h4>
+                    <p class="descripción">
+                        <span><b>{{ item.fuente }}</b></span> <span><i>{{ item.fecha|date('d/m/Y')}}</i> </span>
+                        <span>{{ trim_text(item.contenido, 100) }}</span>
+                        <a href="{{ item.link }}" target="_blank"> &raquo; Ver más</a>
+                    </p>
+                </div>
+            </div>
+        {% else %}
+            <p>No hay noticias que mostrar</p>
+        {% endfor %}
+        </div>
+        <div id="nav_news">&nbsp;</div>
+    </div>
+    <div class="c38r" style="text-align: center">
+        <img src="{{ constant('ROOT') ~ constant('IMAGES') ~ "prox.jpg"}}" style="border-radius:10px;"/>
+    </div>
+</div>

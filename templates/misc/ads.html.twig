@@ -1,0 +1,8 @@
+{# hay que invocar la clase de trae los registros antes #}
+{% for ad in ads.data %}
+    <div class="floatbox">
+        <a href="{{ ad.urlDestino}}" title="{{ ad.urlDestino}}" target="_blank">
+            <img src="{{ constant('ROOT')~ constant('images_ads')~ad.urlImagen}}" alt="{{ ad.urlDestino}}" width="100%" vspace="3"/>
+        </a>
+    </div>
+{% endfor %}

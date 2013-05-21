@@ -1,0 +1,26 @@
+<div id="tabs-carros">
+    <ul>
+        <li><a href="#carros-1"><strong>Ultimas Publicaciones</strong></a></li>
+    </ul>
+    <div id="carros-1" class="subcr">
+        {% for auto in autosTeaser.data %}
+            <div class="grid_6">
+                <a class="fancybox" href="{{ url_carro(auto.Marca,auto.Modelo,auto.anio,auto.idCarro)}}">
+                    <img src="{{ constant('ROOT')~constant('IMAGES_CARROS')~auto.imagen}}" alt="{{ auto.Marca ~" - "~auto.Modelo}}"/>
+                </a>
+                <div class="clearfix">
+                    <h3><a class="fancybox" href="{{ url_carro(auto.Marca,auto.Modelo,auto.anio,auto.idCarro)}}">{{ auto.Marca|title ~" "~ auto.Modelo|title}}</a></h3>
+                    <p><i>{{ trim_text(auto.comentario,50)|capitalize}}</i></p>
+                    <div class="subcr">
+                        <div class="c25l texto">Año: <b>{{auto.anio}} </b></div>
+                        <div class="c25l texto"><b>{{ auto.estado }} </b></div>
+                        <div class="c25r texto">Precio: <b>{{ auto.precio|number_format(0, ',', '.')}} Bsf.</b></div>
+                    </div>
+                </div>
+            </div>
+            {% else %}
+            <p>No hay datos que mostrar.</p>
+            {% endfor %}
+        <div class="clearfix">&nbsp;</div>
+    </div>
+</div>

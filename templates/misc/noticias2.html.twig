@@ -1,0 +1,12 @@
+<div class="floatbox" style="padding-top: 10px;" id="noticias">
+    <div class="floatbox">
+        <h1 class="titulo">Noticias</h1>
+    </div>
+    {% for noticia in feed.data %}
+        {% include 'noticia/noticia-pqno.html.twig'%}
+    {% else %}
+        <div>
+            <p class="pro_info pro_info_pro_info"> No hay noticias publicadas</p>
+        </div>
+    {% endfor %}
+</div>

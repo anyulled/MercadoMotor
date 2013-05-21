@@ -1,0 +1,18 @@
+{% extends 'layout/base.html.twig' %}
+{% block titulo ' Listado de Noticias' %}
+{% block content %}
+<div class="floatbox" id="noticias">
+    <div class="container_12">
+        <div class="subcr">
+            {% for noticia in noticias %}
+                {% include 'noticia/noticia-pqno.html.twig'%}
+            {% else %}
+                <p class="pro_info pro_info_pro_info"> no se encontraron noticias</p>
+            {% endfor %}
+            </div>
+        </div>
+        <div class="floatbox">
+        {{ paginacion|raw }}
+        </div>
+    </div>
+{% endblock %}

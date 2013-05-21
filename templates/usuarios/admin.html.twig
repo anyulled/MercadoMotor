@@ -1,0 +1,121 @@
+{% extends "layout/base-admin.html.twig" %}
+{% block titulo 'Administración de Usuarios' %}
+{% block includes %}
+<script type="text/javascript">
+    if (document.location.host === "aonewebdesign.com") {
+        url = "http://" + document.location.host + "/anyulled/mercadomotor.com/includes/Json.php";
+    }
+    else
+    {
+        url = "http://" + document.location.host + "/mercadomotor/includes/Json.php";
+    }
+    $(document).ready(function() {
+        $(".need_confirmation").click(function() {
+            var $fila = (this);
+            datos = {
+                accion: "delete_user",
+                id: parseInt((this).closest("tr").find("td:first-child a").text())
+            };
+            if (confirm("¿Esta seguro de borrar este registro? los autos registrados por este usuario seran borrados tambien")) {
+                $.getJSON(url, datos, function(data) {
+                    if (data.suceed) {
+                        $fila.closest("tr").remove();
+                        alert("registro eliminado con éxito.");
+                    }
+                    else {
+                        alert("hubo un problema al eliminar el registro, por favor intente de nuevo.");
+                    }
+                })
+            }
+            return false;
+        });
+    });
+    </script>
+<style media="screen" type="text/css">
+            a.adminCarro{
+                position:relative;
+            }
+            a.adminCarro img{
+                position: absolute;
+                left:30px;
+                max-width: 150px;
+                display: none;
+                background: white;
+                padding: 3px;
+                border: 1px solid black;
+            }
+            a.adminCarro:hover img{
+                display: block;
+            }
+        </style>
+{% endblock %}
+{% block content %}
+{% if usuarios|length > 0 %}
+    <table class="pro_table pro_table-striped pro_table-bordered">
+        <caption>
+            <a href="{{constant("ROOT")}}/registrar.php">
+                <img alt="Nuevo Registro" align="top" src="../images/add.png" /><span> Nuevo Registro </span> </a>
+            <a href="{{ constant('ROOT')~"/usuarios"}}">
+               <img alt="volver" hspace="3" align="top" src="../images/config.png"/>
+                Volver al menú</a>
+        </caption>
+        <thead>
+            <tr>
+                <th> <a href="{{"?order=1&dir="~(dir=="DESC"?"ASC":"DESC") }}"> id <img alt="Ordenar"  src="{{ constant('ROOT') ~ constant('IMAGES') ~ "toggle.gif" }}" hspace="2" align="top"/></a></th>
+                <th> <a href="{{"?order=2&dir="~(dir=="DESC"?"ASC":"DESC") }}">Nombre <img alt="Ordenar"  src="{{ constant('ROOT') ~ constant('IMAGES') ~ "toggle.gif" }}" hspace="2" align="top"/></a></th>
+                <th> <a href="{{"?order=3&dir="~(dir=="DESC"?"ASC":"DESC") }}">Apellido <img alt="Ordenar"  src="{{ constant('ROOT') ~ constant('IMAGES') ~ "toggle.gif" }}" hspace="2" align="top"/></a></th>
+                <th> <a href="{{"?order=4&dir="~(dir=="DESC"?"ASC":"DESC") }}">Cedula <img alt="Ordenar"  src="{{ constant('ROOT') ~ constant('IMAGES') ~ "toggle.gif" }}" hspace="2" align="top"/></a></th>
+                <th> <a href="{{"?order=5&dir="~(dir=="DESC"?"ASC":"DESC") }}">Estado<img alt="Ordenar"  src="{{ constant('ROOT') ~ constant('IMAGES') ~ "toggle.gif" }}" hspace="2" align="top"/></a></th>
+                <th> <a href="{{"?order=6&dir="~(dir=="DESC"?"ASC":"DESC") }}">Ciudad <img alt="Ordenar"  src="{{ constant('ROOT') ~ constant('IMAGES') ~ "toggle.gif" }}" hspace="2" align="top"/></a></th>
+                <th> <a href="{{"?order=7&dir="~(dir=="DESC"?"ASC":"DESC") }}">Tipo Usuario <img alt="Ordenar"  src="{{ constant('ROOT') ~ constant('IMAGES') ~ "toggle.gif" }}" hspace="2" align="top"/></a></th>
+                <th> <a href="{{"?order=8&dir="~(dir=="DESC"?"ASC":"DESC") }}">Status <img alt="Ordenar"  src="{{ constant('ROOT') ~ constant('IMAGES') ~ "toggle.gif" }}" hspace="2" align="top"/></a></th>
+                <th> Acción </th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for usuario in usuarios %}
+            <tr>
+                <td>
+                    <a class="adminCarro" name="link{{ usuario.idusuarios }}" href="#link{{ usuario.idusuarios }}"> {{ usuario.idusuarios }}</a>
+                </td>
+                <td> {{ usuario.nombre }} </td>
+                <td> {{ usuario.apellido }} </td>
+                <td> {{ usuario.Cedula }} </td>
+                <td> {{ usuario.Estado }} </td>
+                <td> {{ usuario.Ciudad }} </td>
+                <td> {{ usuario.tipousuario }} </td>
+                <td> {{ (usuario.status==1)?" Activo ":" Inactivo " }} </td>
+                <td align="right">
+                    <a href="editar.php?id={{ usuario.idusuarios }}"><img alt="Editar" align="absmiddle" src="../images/edit.png" /><span> Editar </span> </a>
+                    <a href="#" class="need_confirmation"><img alt="Eliminar" align="absmiddle" src="../images/delete.png" /><span> Eliminar </span> </a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td><div class="pro_info">
+                        <p class="message" align="center">
+                            <img src="../images/info.png" align="top" hspace="2" alt="info"/>
+                            No hay resultados que mostrar</p>
+                    </div>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="9">
+                    <a href="registrar.php"><img alt="Nuevo Registro" align="top" src="../images/add.png" /><span> Nuevo Registro </span> </a>
+                     {{paginado_lista|raw}}
+            </td>
+            </tr>
+        </tfoot>
+    </table>
+    <div class="pro_wrapper">
+        <center>
+            <a href="../usuarios">
+                <img alt="volver" hspace="3" align="top" src="../images/config.png"/>
+                Volver al menú</a>
+        </center>
+    </div>
+{% endif %}                                              
+{% endblock %}

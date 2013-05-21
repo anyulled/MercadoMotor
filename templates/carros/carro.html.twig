@@ -1,0 +1,14 @@
+<div class="grid_3 carro{{ auto.vendido ? " vendido" : "" }}">
+    <a class="pro_image_style3 pro_image_with_capt lightbox-image" href="{{ url_carro(auto.Marca,auto.Modelo,auto.anio,auto.idCarro) }}">
+        <img width="100%" class="center" alt="imagen auto" src="{{ constant('ROOT') ~ constant('IMAGES_CARROS') ~ auto.imagen}}"/>
+    </a>
+    <div class="infoCarro">
+        <p>
+            <b>{{ auto.Marca|title ~ " " ~ auto.Modelo|title }}</b><br/>
+            <b>Transmisión:</b> {{ auto.transmision }}<br/>
+            <b>Año:</b> {{ auto.anio }}<br/>
+            <b>Precio:</b> {{ auto.precioVehiculo|number_format(0, ',', '.')}} Bsf.<br/>
+            <b>Estado:</b> {{ auto.estado }}<br/>
+        </p>
+    </div>
+</div>

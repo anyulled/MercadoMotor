@@ -1,0 +1,18 @@
+{%extends "layout/base-admin.html.twig"%}
+{% block titulo 'introducir forma de pago' %}
+{%block content%}
+<div class="floatbox">
+    <h2>Datos de la transferencia</h2>
+    <img class="float_right" src="{{ constant('ROOT')~constant('IMAGES')~"logo_banco_activo.png"}}"/>
+    <p><b>Banco:</b><span>Banco Activo</span></p>
+    <p><b>Tipo de Cuenta:</b><span>Ahorros</span></p>
+    <p><b>N&uacute;mero de Cuenta:</b><span>0000-1111-2222-3333-4444</span></p>
+    <p><b>RIF:</b><span>J-123456789-1</span></p>
+    <p><b>Titular:</b><span>mercadomotor JMC 3000</span></p>
+    <p><b>Monto:</b><span>175,00 Bsf. </span></p>
+</div>
+<div class="clearBoth">
+    <p>Una vez realizada la transferencia haz click en <b>siguiente</b> para registrarla</p>
+    <p><a href="../usuarios">Regresar</a> <a href="pagar.php?accion=formulario&id={{id}}&banco=banco_activo">Siguiente</a></p>
+</div>
+{%endblock%}

@@ -1,0 +1,286 @@
+{% extends "layout/base-admin.html.twig" %}
+{% block titulo 'Registrar Auto ' %}
+{% block includes%}
+<script type="text/javascript">
+            $(document).ready(function(){
+                $.validator.addMethod("alphanumeric", function(value, element) {
+                    return this.optional(element) || /^[a-z0-9\-]+$/i.test(value);
+                }, "Este campo debe tener solo letras numeros y guiones.");
+                $("#pro_form1").validate({
+                    rules: {
+                        precio:{
+                            digits:true,
+                            min:1000},
+                        placa:{
+                            alphanumeric:true
+                        },
+                        foto1: {
+                            required: true,
+                            accept: "jpg|png"
+                        },
+                        foto2: {
+                            accept: "jpg|png"
+                        },
+                        foto3: {
+                            accept: "jpg|png"
+                        },
+                        foto4: {
+                            accept: "jpg|png"
+                        },
+                        foto5: {
+                            accept: "jpg|png"},
+                        caracteristicas:{
+                            maxlength: 500
+                        }
+                    },
+                    messages:{
+                        precio:{digits:"Por favor, no incluya puntos ni comas en el precio"}
+                    },
+                    submitHandler:function(){
+                        if($("#pro_form1").valid()){
+                            mensaje = "<div class='info'><img src='../images/info.png' /><p>Cargando, por favor espere</p></div>";
+                            $.fancybox(mensaje,
+                            {
+                                'autoDimensions'    : false,
+                                'modal'                    :true,
+                                'width'                     : 350,
+                                'height'                   : 'auto',
+                                'transitionIn'           : 'none',
+                                'transitionOut'        : 'none'
+                            }
+                        );
+                            pro_form1.submit();
+                        }
+                    }
+                });
+            });
+    </script>
+{% endblock %}
+{% block content %}
+<form name="registrar" id="pro_form1" action="" method="post" enctype="multipart/form-data">
+    <input type="hidden" name="vendido" value="0"/>
+    {% for error in auto.errores%}
+    <div class="pro_info pro_info_important">
+        <label>Error</label>
+        <p class="message"> {{error}} </p>
+    </div>
+    {% endfor %}
+    <fieldset>
+        <legend>Datos del Vehículo</legend>
+        <div class="container_12">
+            <div class="grid_6">
+                    <label for="tipovehiculo">
+                        <span class="pro_text-form"> Tipo de vehículo <sup>*</sup></span> 
+                        <select name="tipovehiculo" class="required">
+                            <option value="">--</option>
+                            {% for tipo in tipoVehiculo.data %}
+                            <option value="{{ tipo.idtipovehiculo }}">{{ tipo.tipovehiculo }}</option>
+                            {% endfor %}
+                        </select>
+                    </label>
+                    <label for="marca">
+                        <span class="pro_text-form">Marca<sup>*</sup></span> 
+                        <select name="marca" id="marcas" class="required">
+                            <option> -- </option>
+                        </select>
+                    </label>
+                    <label for="modelo">
+                        <span class="pro_text-form">Modelo <sup>*</sup></span>
+                        <select name="modelo" id="modelos" class="required">
+                            <option value=""> -- </option>
+                        </select>
+                    </label>
+                    <label for="fecha">
+                        <span class="pro_text-form">Año<sup>*</sup> </span>
+                        <select name="fecha" class="required">
+                            <option value="" class="number"> -- </option>
+                            {%for i in "now"|date('Y')..1900 %}
+                            <option>{{i}} </option>
+                            {%endfor%}                                
+                        </select>
+                    </label>
+            </div>
+            <div class="grid_6">
+                <label for="recorrido">
+                    <span class="pro_text-form">Recorrido (Km) </span>
+                    <input type="text" name="recorrido" class="number"/>
+                </label>
+                <label for="version">
+                    <span class="pro_text-form">Versión</span>
+                    <input type="text" name="version"/>
+                </label>
+                <label for="color">
+                    <span class="pro_text-form">Color<sup>*</sup></span>
+                    <select name="color" class="required">
+                        <option value="null"> -- </option>
+                        {%for color in coloresVehiculo.data%}
+                        <option value="{{color.id}}">{{color.nombre}} </option>
+                    {%endfor%}
+                    </select>
+                </label>
+                <label for="placa">
+                    <span class="pro_text-form">Placa </span>
+                    <input type="text" name="placa"/>
+                </label>
+            </div>
+        </div>
+    </fieldset>
+    <fieldset>
+        <legend>Motor</legend>
+        <div class="container_12">
+            <div class="grid_6">
+                <label for="motor">
+                    <span class="pro_text-form">Motor <sup>*</sup> </span>
+                    <input type="text" name="motor"  class="required"/>
+                </label>
+                <label for="transmision">
+                    <span class="pro_text-form">Transmisión <sup>*</sup> </span>
+                    <select name="transmision"  class="required">
+                        <option value=""> -- </option>
+                        {% for transmision in transmisionVehiculo.data %}
+                        <option value="{{transmision.idtransmisionvehiculo}}">{{transmision.transmisionvehiculo}}</option>
+                        {% endfor %}
+                    </select>
+                </label>
+            </div>
+            <div class="grid_6">
+                <label for="cilindros">
+                    <span class="pro_text-form">N° Cilindros<sup>*</sup></span>
+                    <input type="text" name="cilindros" class="required number"/>
+                </label>
+                <label for="traccion">
+                    <span class="pro_text-form">Tracción<sup>*</sup></span>
+                    <select name="traccion" class="required">
+                        <option value="">--</option>
+                        {%for traccion in traccionVehiculo.data%}
+                        <option value="{{traccion.idtraccionvehiculo}}">{{traccion.traccionvehiculo}}</option>
+                    {%endfor%}
+                    </select>
+                </label>
+            </div>
+        </div>
+    </fieldset>
+    <fieldset>
+        <legend>Accesorios</legend>
+        <div class="container_12">
+            <div class="grid_6">
+                <label for="vidrios">
+                    <span class="pro_text-form">Vidrios<sup>*</sup></span>
+                    <select name="vidrios" class="required">
+                        <option value="null">-- Seleccione</option>
+                        <option value="0">Ahumados</option>
+                        <option value="1">Normales</option>
+                    </select>
+                </label>
+                <label for="tapizado">
+                    <span class="pro_text-form">Tapizado<sup>*</sup></span>
+                    <select name="tapizado" class="required">
+                        <option value="null">-- Seleccione</option>
+                        <option value="0">Tela</option>
+                        <option value="1">Cuero</option>
+                    </select>
+                </label>
+                <label for="airbag">
+                    <span class="pro_text-form">Airbag<sup>*</sup></span>
+                    <select name="airbag" class="required">
+                        <option value="">-- Seleccione</option>
+                        <option value="1">SI</option>
+                        <option value="0">NO</option>
+                    </select>
+                </label>
+                <label for="frenosabs">
+                    <span class="pro_text-form">Frenos ABS<sup>*</sup></span>
+                    <select name="frenosabs" class="required">
+                        <option value="">-- Seleccione</option>
+                        <option value="1">SI</option>
+                        <option value="0">NO</option>
+                    </select>
+                </label>
+            </div>
+            <div class="grid_6">
+                    <label for="direccion">
+                        <span class="pro_text-form">Dirección <sup>*</sup> </span>
+                    <select name="direccion" class="required">
+                        <option value="">--</option>
+                        {%for direccion in direccionVehiculo.data%}
+                        <option value="{{direccion.iddireccionVehiculo}}">{{direccion.direccionVehiculo}}</option>
+                        {%endfor%}
+                    </select>
+                    </label>
+                    <label for="aireacondicionado">
+                        <span class="pro_text-form">Aire Acondicionado<sup>*</sup></span>
+                    <select name="aireacondicionado" class="required">
+                        <option value="">-- Seleccione</option>
+                        <option value="1">SI</option>
+                        <option value="0">NO</option>
+                    </select>
+                    </label>
+                    <label for="estereo">
+                        <span class="pro_text-form">Estereo <sup>*</sup></span>
+                    <select name="estereo" class="required">
+                        <option value="">-- Seleccione</option>
+                        <option value="1">SI</option>
+                        <option value="0">NO</option>
+                    </select>
+                    </label>
+                    <label for="blindado">
+                        <span class="pro_text-form">Blindado<sup>*</sup></span>
+                    <select name="blindado" class="required">
+                        <option value="">-- Seleccione</option>
+                        <option value="1">SI</option>
+                        <option value="0">NO</option>
+                    </select>
+                    </label>
+            </div>
+        </div>
+    </fieldset>
+    <fieldset>
+        <legend>Otras caracteristicas</legend>
+        <label for="caracteristicas">
+            <span class="pro_text-form">Características</span>
+                <textarea cols="3" rows="3" name="caracteristicas"></textarea>
+            </label>
+    </fieldset>
+    <fieldset>
+        <legend>Precio</legend>
+        <div class="container_12">
+            <div class="grid_6">
+                <label for="precio">
+                    <span class="pro_text-form">Precio<sup>*</sup> </span>
+                    <input type="text" name="precio" class="required number"/>
+                </label>
+            </div>
+            <div class="grid_6">
+                <label for="negociable">
+                    <span class="pro_text-form">Negociable <sup>*</sup> </span>
+                    <select name="negociable" class="required">
+                        <option value="">-- Seleccione</option>
+                        <option value="1">SI</option>
+                        <option value="0">NO</option>
+                    </select>
+                </label>
+            </div>
+        </div>
+    </fieldset>
+    <fieldset>
+        <legend>Fotos</legend>
+            {% for i in 1..8 %}
+            <label for="fotos">
+                <span class="pro_text-form">Foto {{ i == 1 ? 'Principal *'|raw : i }}  </span>
+                <input type="file" name="foto{{i}}" {{ i == 1 ? 'class="required"' : '' }}/>
+            </label>
+            {% endfor %}
+    </fieldset>
+    <fieldset>
+        <legend>Acción</legend>
+        <input class="pro_btn pro_warning" type="reset" name="borrar" value="Resetear"/>
+        <input class="pro_btn pro_inf" type="submit" name="enviar" value="Enviar"/>
+    </fieldset>
+</form>
+<div class="container">
+    <center>
+        <img alt="volver" hspace="3" align="middle" src="../images/config.png"/>
+        <a href="../usuarios">Volver al menú</a>
+    </center>
+</div>
+{% endblock %} 

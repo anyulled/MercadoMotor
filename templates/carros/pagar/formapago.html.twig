@@ -1,0 +1,23 @@
+{%extends "layout/base-admin.html.twig"%}
+{% block titulo 'elige una forma de pago' %}
+{%block content%}
+<div class="center centered">
+    <h2>Elige Forma de Pago</h2>
+    <table style="width: 70%; border: none; text-align: center; margin: 0 auto;">
+        <tr>
+            <td style="width: 50%;">
+                <a href="pagar.php?accion=tdc&id={{id}}">
+                    <img height="300" src="{{constant('ROOT') ~ constant('IMAGES') ~ "transferencia.jpg"}}"/>
+                </a>
+                <h3>Transferencia Bancaria</h3>
+            </td>
+            <td>
+                <a href="pagar.php?accion=transferencia&id={{id}}">
+                    <img height="300" src="{{constant('ROOT') ~ constant('IMAGES') ~ "tdc.jpg"}}"/>
+                </a>
+                <h3>Tarjeta de Cr&eacute;dito <br/>(Proximamente)</h3>
+            </td>
+        </tr>
+    </table>
+</div>
+{%endblock%}

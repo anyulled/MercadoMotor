@@ -1,0 +1,34 @@
+{% extends 'layout/base.html.twig' %}
+{% block titulo 'Indice de autos' %}
+{% block content%}
+<div class="floatbox">
+    <h1 class="titulo">Autos</h1>
+    <div class="container_12">
+        {% if marcas.data|length > 0 %}
+            <h3>Seleccione una marca</h3>
+            {% for marca in mismarcas.data %}
+            <div class="grid_2">
+                <div class="">
+                <a href="{{ constant('ROOT') ~ "/autos/" ~ marca.nombre }}" title="{{marca.nombre|title}}">
+                    <center>
+                        <img src="{{constant('ROOT') ~ constant('IMAGES') ~ constant('LOGOS') ~ marca.urlimagen }}" alt="{{ marca.nombre }}" align="middle"/>
+                    </center>
+                    <span>{{ marca.nombre ~ " (" ~ marca.carros ~ ")" }}</span>
+                </a>
+                </div>
+            </div>
+            {% endfor %}
+        {% endif %}
+            <div class="clear"></div>
+        </div>
+        <div class="hr-border-1"></div>
+        <div class="">
+            <h2 class="titulo">Últimos Carros</h2>
+                <div class="container_12">
+                {% for auto in miscarros.data %}
+                    {% include 'carros/carro.html.twig' %}
+                {% endfor %}
+                </div>
+            </div>
+        </div>
+{% endblock %}

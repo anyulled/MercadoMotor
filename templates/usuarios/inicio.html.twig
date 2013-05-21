@@ -1,0 +1,100 @@
+{% extends "layout/base-admin.html.twig" %}
+{% block titulo %} Panel de Usuario {%endblock%}
+{% block content %}
+<div class="container_12">
+    <h1 class="titulo">Panel Usuario </h1>
+    <div class="grid_3">
+        <img class="float_left" width="100" src="{{constant('ROOT') ~ constant('IMAGES')~"edit_user.png"}}" align="absmiddle"/>
+        <h3><a href="editar.php">Editar Usuario</a></h3>
+    </div>
+    <div class="grid_3">
+        <img class="float_left" width="100" src="{{constant('ROOT') ~ constant('IMAGES')~"yellow_car.png"}}" align="absmiddle"/>
+        <h3><a href="../carros/registrar.php">Publicar Veh&iacute;culo</a></h3>
+    </div>
+    <div class="grid_3">
+        <img class="float_left" width="100" src="{{constant('ROOT') ~ constant('IMAGES')~"red_car.png"}}" align="absmiddle"/>
+        <h3><a href="../carros/admin.php" class="pro_settings">Administrar Carros</a></h3>
+    </div>
+    <div class="grid_3">
+        <img class="float_left" width="100" src="{{constant('ROOT') ~ constant('IMAGES')~"money_bag.png"}}" align="absmiddle"/>
+        <h3><a href="../carros/pagar.php">Pagar Veh&iacute;culo</a></h3>
+    </div>
+</div>
+{% if usuario.tipousuario == 1 %}
+<div class="floatbox">
+    <h1 class="titulo">Panel Administrador</h1>
+    <table class="pro_table pro_table-striped">
+        <thead>
+            <tr>
+                <th>Carros</th>
+                <th>Usuarios</th>
+                <th>Guía Automotriz</th>
+                <th>Concesionarios</th>
+                <th>Publicidad</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    <img src="../images/config.png" hspace="3" border="0" align="absmiddle" alt="Administrar Status Carros"/>
+                    <a href="{{ constant('ROOT')~"/carros/admin.php?admin=true" }}">Administrar Carros</a>
+                </td>
+                <td>
+                    <img src="../images/config.png" hspace="3" border="0" align="absmiddle" alt="Administrar Usuarios"/>
+                    <a href="{{ constant('ROOT')~"/usuarios/admin.php?admin=true" }}"> Administrar usuarios</a>
+                </td>
+                <td>
+                    <img src="../images/config.png" hspace="3" border="0" align="absmiddle" alt="Administrar Usuarios"/>
+                    <a href="{{ constant('ROOT')~"/guia_automotriz/admin.php?admin=true" }}"> Administrar Guía Automotríz</a>
+                </td>
+                <td>
+                    <img src="../images/config.png" hspace="3" border="0" align="absmiddle" alt="Administrar Usuarios"/>
+                    <a href="{{ constant('ROOT')~"/concesionarios/admin.php?admin=true" }}"> Administrar Concesionarios</a>
+                </td>
+                <td>
+                    <img src="../images/config.png" hspace="3" border="0" align="absmiddle" alt="Administrar Usuarios"/>
+                    <a href="{{ constant('ROOT')~"/publicidad/admin.php?admin=true" }}"> Administrar publicidad</a>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <img src="../images/config.png" hspace="3" border="0" align="absmiddle" alt="Administrar Status Carros"/>
+                    <a href="{{ constant('ROOT')~ "/carros/status.php" }}">Administrar Status Carros</a>
+                </td>
+                <td>
+                    <img src="../images/config.png" hspace="3" border="0" align="absmiddle" alt="Administrar Status Carros"/>
+                    <a href="{{ constant('ROOT')~"/usuarios/status.php" }}"> Administrar Status Usuarios</a>
+                </td>
+                <td>
+                    <img src="../images/config.png" hspace="3" border="0" align="absmiddle" alt="Administrar Status Carros"/>
+                    <a href="{{ constant('ROOT')~"/guia_automotriz/status.php" }}"> Administrar Status Guía Automotríz</a>
+                </td>
+                <td>
+                    <img src="../images/config.png" hspace="3" border="0" align="absmiddle" alt="Administrar Status Carros"/>
+                    <a href="{{ constant('ROOT')~"/conccesionarios/status.php" }}"> Administrar Status Concesionarios</a>
+                </td>
+                <td>
+                    <img src="../images/config.png" hspace="3" border="0" align="absmiddle" alt="Administrar Status Carros"/>
+                    <a href="{{ constant('ROOT')~ "/publicidad/status.php" }}"> Administrar Status Publicidad</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="pro_table pro_table-striped">
+        <thead>
+            <tr>
+                <th>Noticias</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    <img src="../images/config.png" hspace="3" border="0" align="absmiddle" alt="Administrar Status Carros"/>
+                    <a href="{{ constant('ROOT')~"/noticias/admin.php"}}">Administrar</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+{% endif %}
+{% endblock %}

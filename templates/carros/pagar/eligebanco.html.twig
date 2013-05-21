@@ -1,0 +1,17 @@
+{% extends "layout/base-admin.html.twig"%}
+{% block titulo ''%}
+{%block content%}
+<div class="center centered">
+    <h2>Elige Forma de Pago</h2>
+    <div class="float_left">
+        <a href="pagar.php?accion=banco_activo&id={{id}}">
+            <img src="{{constant('ROOT') ~ constant('IMAGES') ~ "logo_banco_activo.png" }}"/>
+        </a>
+    </div>
+    <div class="float_left">
+        <a href="pagar.php?accion=banesco&id={{id}}">
+            <img height="100" src="{{constant('ROOT') ~ constant('IMAGES') ~ "logo_banesco.jpg"}}"/>
+        </a>
+    </div>
+</div>
+{%endblock%}

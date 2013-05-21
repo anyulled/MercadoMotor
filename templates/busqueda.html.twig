@@ -1,0 +1,32 @@
+{% extends "layout/base.html.twig" %}
+{% block titulo %} Resultados de búsqueda{% endblock %}
+
+{% block content %}
+<h1 class="titulo"><a name="resultado"></a> Resultados:</h1>
+<div class="float-right"> 
+        <b>Ordenar por</b> 
+        <span> precio:</span>
+        <a href="{{url_sortable("precioVehiculo","asc")|raw }}"> Asc</a> |
+        <a href="{{url_sortable("precioVehiculo","desc")|raw }}"> Desc</a>
+        <span> Año:</span>
+        <a href="{{url_sortable("anio","asc")|raw }}"> Asc</a> |
+        <a href="{{url_sortable("anio","desc")|raw }}"> Desc</a>
+        <span> Fecha de Publicación</span>
+        <a href="{{url_sortable("carros.FechaCreacion","asc")|raw }}"> Asc</a> |
+        <a href="{{url_sortable("carros.FechaCreacion","desc")|raw }}"> Desc</a>
+    </p>
+</div>
+{% for auto in resultados %}
+    {% include 'carros/carro.html.twig' %}
+{% else %}
+<div class="pro_info pro_info_pro_info"> 
+    <p class="message"> 
+        <img src="images/info.png" alt="Info" align="top" hspace="2"/> Mo se encontraron datos que mostrar 
+        {%if constant("DEBUG")%} 
+        <pre> {{ dump(query) }} </pre> 
+        {%endif %} 
+</p> 
+</div> 
+{% endfor %}
+<div class="paginacion"> {{ paginacion|raw }} </div> 
+{% endblock %}

@@ -1,0 +1,20 @@
+User-agent: *
+Disallow: 
+Disallow: /cgi-bin/
+Disallow: /guia-automotriz/
+Disallow: /concesionarios/
+Disallow: /fancybox/
+Disallow: /cache/
+Disallow: /cac/
+Disallow: /js/
+Disallow: /carros/registrar.php
+Disallow: /carros/editar.php
+Disallow: /admin
+Disallow: /noticias/admin.php
+Disallow: /publicidad/admin.php
+Disallow: /publicidad/registrar.php
+Disallow: /publicidad/editar.php
+Disallow: /usuarios
+Disallow: /includes
+Disallow: /templates
+Disallow: /yaml

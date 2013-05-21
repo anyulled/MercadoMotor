@@ -1,0 +1,67 @@
+{% extends "layout/base-admin.html.twig" %}
+{% block titulo %} Administración de carros{% endblock %}
+{% block includes %}
+<script type="text/javascript">
+    url ="{{ constant('ROOT')}}/includes/Json.php";
+    admin = {{ usuario.tipousuario }};
+    $(document).ready(function(){
+        $(".need_confirmation").click(function(){
+            if(admin){
+                var fila = $(this);
+                var idCarro = parseInt($(this).closest("tr").find("td:first-child a").text());
+            } 
+            else{
+                var fila = $(this);
+                var idCarro = fila.attr("id");
+            }
+                datos = {
+                    accion:"delete",
+                    id: idCarro
+                };
+            if(confirm("¿Esta seguro de borrar este registro?")){
+                $.getJSON(url, datos, function(data){
+                    if(data.suceed){
+                        if(admin){
+                            fila.closest("tr").remove();
+                        } else{
+                            fila.closest(".carro").remove();
+                        }
+                        alert("registro eliminado con éxito.");
+                    }
+                    else{
+                        alert("hubo un problema al eliminar el registro, por favor intente de nuevo.");
+                    }
+                })
+            }
+            return false;
+        });
+    });
+    </script>
+<style media="screen" type="text/css">
+            a.adminCarro{
+                position:relative;
+            }
+            a.adminCarro img{
+                position: absolute;
+                left:30px;
+                max-width: 150px;
+                display: none;
+                background: white;
+                padding: 3px;
+                border: 1px solid black;
+            }
+            a.adminCarro:hover img{
+                display: block;
+            }
+            #nav{
+                height: inherit;
+            }
+</style>
+{% endblock %}
+{% block content %}
+    {% if usuario.tipousuario == 1 %}
+        {%include 'carros/admin_super_user.html.twig'%}
+    {% else %}
+        {% include 'carros/carro-admin.html.twig' %}
+    {% endif %}
+{% endblock %}

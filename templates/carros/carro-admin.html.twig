@@ -1,0 +1,34 @@
+<div class="floatbox">
+    {{paginado|raw}}
+</div>
+{% for auto in carros %}
+<div class="carro{{ auto.vendido ? " vendido" : "" }}">
+    <a class="fancybox" href="{{ url_carro(auto.Marca,auto.Modelo,auto.anio,auto.idCarro) }}">
+        <img class="center" alt="imagen auto" src="{{ constant('ROOT') ~ constant('IMAGES_CARROS') ~ auto.imagen}}"/>
+    </a>
+    <div class="infoCarro">
+        <p>
+            <b>{{ auto.Marca|title ~ " " ~ auto.Modelo|title }}</b><br/>
+            <b>Transmisión:</b> {{ auto.transmision }}<br/>
+            <b>Año:</b> {{ auto.anio }}<br/>
+            <b>Precio:</b> {{ auto.precioVehiculo|number_format(0, ',', '.')}} Bsf.<br/>
+            <b>Estado:</b> {{ auto.estado }}<br/>
+        </p>
+    </div>
+        <div class="clearBoth">
+            <a href="editar.php?id={{auto.idCarro}}">Editar</a>
+            <a href="#">Vendido</a>
+            <a id="{{ auto.idCarro }}" href="#" class="need_confirmation">Eliminar</a>
+        </div>
+</div>
+{% else %}
+<div class="pro_info pro_info_pro_info">
+    <p class="message" align="center">
+        <img src="../images/info.png" align="top" hspace="2" alt="info"/>
+        No hay resultados que mostrar</p>
+</div>
+{% endfor %}
+<div class="clearBoth">
+    {{paginado_lista|raw}}
+</div>
+<div class="clearBoth">&nbsp;</div>

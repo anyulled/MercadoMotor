@@ -1,0 +1,98 @@
+{% extends 'base-admin.html.twig' %}
+{% block titulo %}
+    {{ accion|title ~ " Noticia" }}
+{% endblock %}
+{% block includes %}
+<script type="text/javascript" src="{{ constant("ROOT")}}/js/lib/tiny_mce/jquery.tinymce.js"></script>
+<script type="text/javascript">
+    $(document).ready(function(){
+        $("textarea").tinymce({
+            script_url : '{{ constant("ROOT")}}/js/lib/tiny_mce/tiny_mce.js'
+        });
+        $("#registro").validate();
+        $("#titulo").rules("add",{
+            minlength:5,
+            maxlength:500
+        });
+        $("[id*=imagen]").rules("add",{
+            accept : "jpg|png", 
+            messages : {
+                accept : " Solo se permiten archivos jpg o png"
+            }
+        });
+        $(".eliminar_foto").click(function(){
+            link = $(this);
+            if(confirm("Realmente desea borrar esta foto?")){
+                url = "../includes/Json.php";
+                data = new Object();
+                data.accion='eliminar_imagen_noticia';
+                data.id= $(this).next("input[type='hidden']").val();
+                $.getJSON(url, data, function(data){
+                    if(data.suceed){
+                        link.parents("div:eq(0)").find('input[type="file"]').removeAttr("disabled");
+                        link.parent("p").next("img").remove().end().remove();
+                    }
+                })
+            }
+            return false;
+        });
+    });
+</script>
+{% endblock %}
+{% block content %}
+<form id="registro" class="yform columnar" method="post" action="admin.php" enctype="multipart/form-data">
+    <input type="hidden" name="accion" value="guardar"/>
+    {% if dato.id is defined %}
+    <input type="hidden" name="id" value="{{dato.id }}"/>
+    {% endif %}
+    <fieldset>
+        <legend>Datos de la Noticia</legend>
+        <div class="type-text">
+            <label for="titulo">Titulo</label>
+            <input id="titulo" maxlength="500" type="text" name="titulo" class="required" value="{{ dato.titulo }}"/>
+        </div>
+        <div class="type-text">
+            <label for="texto">Texto</label>
+            <textarea name="texto" class="required">{{ dato.texto }}</textarea>
+        </div>
+        <div class="type-text">
+            <label for="fuente">Fuente</label>
+            <input type="text" class="required url" name="fuente" value="{{ dato.fuente }}"/>
+        </div>
+        <div class="type-select">
+            <label for="status">Status</label>
+            <select name="status" class="required">
+                <option value="1" {{ dato.status == 1 ? " selected='selected' " : " " }}>Activa</option>
+                <option value="0" {{ dato.status == 0 ? " selected='selected' " : " " }}>Inactiva</option>
+            </select>
+        </div>
+    </fieldset>
+    <fieldset>
+        <legend>Im&aacute;genes</legend>
+        {% for i in 0..9 %}
+        <div class="grid_6">
+            {% if imagenes[i].url is defined %}
+            <p>
+                <a href="#" class="eliminar_foto">Reemplazar Foto</a>
+                <input type="hidden" name="foto_id{{i}}" value="{{ imagenes[i].id }}"/>
+                <img src="{{ constant('ROOT') ~ constant("IMAGES") ~"misc/"~ imagenes[i].url }}" width="200"/>
+            </p>
+            {% endif %}
+            <div class="type-text">
+                <label for="imagen{{ i }}">Imagen {{ i+1 }}</label>
+                <input type="file" id="imagen{{i}}" name="imagen{{i}}" value="" {{ i == 0 ? " class='required' " : "" }} {{ imagenes[i].url is defined ? " disabled='true' " : "" }}/>
+            </div>
+        </div>
+        {% endfor %}
+    </fieldset>
+    <fieldset>
+        <legend>Acci&oacute;n</legend>
+        <div class="type-button">
+            <p align="right">
+                <input type="reset" name="borrar" value="Resetear"/>
+                <input type="submit" name="enviar" value="Enviar"/>
+            </p>
+        </div>
+    </fieldset>
+</form>
+{% endblock %}

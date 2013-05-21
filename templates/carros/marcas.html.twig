@@ -1,0 +1,13 @@
+{% if marcas.data|length > 0 %}
+<ul class="banners-list">
+    {% for marca in marcas.data %}
+        <li>
+            <a title="{{ marca.nombre}}" href="{{ constant('ROOT') ~ "/autos/" ~ marca.nombre ~ "#modelos"}}">
+                <img alt="{{ marca.nombre }}" align="middle" src="{{ constant('ROOT')~constant('IMAGES')~constant('LOGOS')~marca.urlImagen}}"/>
+            </a>
+        </li>
+    {% endfor %}
+    </ul>
+{% else%}
+    <p>No se encontraron resultados. Por favor intente nuevamente.</p>
+{% endif %}

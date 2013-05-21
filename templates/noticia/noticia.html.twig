@@ -1,0 +1,86 @@
+{% extends 'layout/base.html.twig' %}
+{% block titulo 'Noticia :: ' ~ noticia.titulo %}
+{% block includes%}
+<script type="text/javascript">
+$(document).ready(function(){
+    $("a.galeria").fancybox();
+});
+</script>
+<style type="text/css" media="all">
+.carro{
+    width: 95%;
+    margin: 3px 0.5%;
+}
+</style>
+{% endblock %}
+{% block content %}
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=94123862125";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+<div class="c66l">
+{% if mensaje is defined %}
+    <div class="pro_info pro_info_pro_info">
+        <p class="message">
+            <img alt="volver" hspace="3" align="middle" src="../images/info.png"/>
+            <span>{{ mensaje }}</span>
+        </p>
+    </div>
+{% else %}
+    <div>
+        <a name></a>
+        <h2> {{ noticia.titulo}}</h2>
+        <p><b>Fecha</b> {{ noticia.fecha|date('d/m/Y') }} </p>
+    </div>
+    <div class="floatbox">
+        <center>
+            <img src="{{ constant('ROOT') ~ constant('IMAGES') ~ "misc/" ~ imagenes[0].url }}" width="70%" style="margin: 10px; border-radius: 10px;"/>
+        </center>
+        <div id="share" class="float_right">
+            <br/>
+            <p style="font-weight: bold; text-align: center; white-space: nowrap;">Comparte esta página</p>
+            <div class="addthis_toolbox addthis_default_style addthis_32x32_style" style="padding:3px;">
+                <a class="addthis_button_preferred_1"></a>
+                <a class="addthis_button_preferred_3"></a>
+                <a class="addthis_button_preferred_2"></a>
+                <a class="addthis_button_preferred_4"></a>
+                <a class="addthis_button_compact"></a>
+                <a class="addthis_counter addthis_bubble_style"></a>
+            </div>
+            <script type="text/javascript">var addthis_config = {"data_track_clickback" : true};</script>
+            <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid=ra-4e1b7acc2fb3ee4e"></script>
+        </div>
+        <div>
+            {{ noticia.texto|raw }}
+        </div>
+            <p><b>Fuente:</b> <a href="{{ noticia.fuente }}">{{ noticia.fuente }}</a></p>
+    </div>
+    <div class="floatbox">
+        {% for imagen in imagenes %}
+            <div class="float_left">
+                <a title="{{noticia.titulo}}" class="galeria" rel="noticia" href="{{ constant('ROOT') ~ constant('IMAGES') ~ "misc/" ~ imagen.url }}">
+                <img src="{{ constant('ROOT') ~ constant('IMAGES') ~ "misc/" ~ imagen.url }}" width="100"/>
+                </a>
+            </div>
+        {% endfor %}
+    </div>
+        <div id="comentarios-facebook">
+            <div id="fb-root"></div>
+	    <div class="fb-like" data-href="http://mercadomotor.com.ve/noticias/noticia.php?id={{ noticia.id}}" data-layout="button_count" data-action="like" data-send="false" data-width="680" data-show-faces="true"></div>
+            <div class="fb-comments" data-href="http://mercadomotor.com.ve/noticias/noticia.php?id={{ noticia.id}}" data-num-posts="2" data-width="680"></div>
+        </div>
+{% endif %}
+</div>
+<div class="c33r">
+    <a href="{{ constant('ROOT') }}/carros/registrar.php">
+    <img src="{{ constant('ROOT') ~ constant('IMAGES') }}publica_tu_carro_aqui.jpg" width="100%"/>
+    </a>
+    <div class="floatbox">
+        {% include 'misc/teaser-vertical.html.twig' %}
+    </div>
+</div>
+{% endblock %}

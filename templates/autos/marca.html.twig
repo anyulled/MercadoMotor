@@ -1,0 +1,36 @@
+{% extends 'layout/base.html.twig' %}
+{% block titulo nombre_pagina|title %}
+{% block content%}
+{% if miMarca.data|length > 0 %}
+<div class="floatbox">
+    <h2 class="titulo" id="modelos"> {{ miMarca.data[0].nombre }}</h2>
+    <img class="img-indent-bot-1" src="{{ constant('ROOT') ~ constant('IMAGES') ~"Banners/"~ miMarca.data[0].banner }}" alt="{{miMarca.data[0].nombre }}"/>
+</div>
+{% endif %}
+<div class="floatbox">
+    <div class="subcr">
+        {% for modelo in modelos.data %}
+        <div class="grid_3">
+            <a href="{{ constant('ROOT') ~ "/autos/" ~ miMarca.data[0].nombre|title ~ "/" ~ modelo.nombre|replace(" ","-")|title }}#resultados"><b>{{ modelo.nombre|title }}</b></a> &nbsp;
+        </div>
+        {%else%}
+        <div class="pro_info">
+            <p>No se encontraron modelos con registros para esta marca.</p>
+        </div>
+        {% endfor %}
+            <div class="clear"></div>
+    </div>
+</div>
+<!-- Listado de Modelos -->
+
+<!--  Listado de registros -->
+<div class="floatbox" id="resultados">
+    {% for auto in lista.data %}
+    {% include 'carros/carro.html.twig' %}
+    {% else%}
+    <div class="floatbox info">
+        <p>Seleccione un modelo de esta marca.</p>
+    </div>
+    {% endfor %}
+</div>
+{% endblock%}

@@ -1,0 +1,28 @@
+{%extends "layout/base-admin.html.twig"%}
+{% block titulo 'Introducir datos de pago ' %}
+{%block content%}
+<div class="floatbox">
+    <form class="yform" method="post" action="pagar.php">
+        <input type="hidden" name="accion" value="pagar"/>
+        <input type="hidden" name="id" value="{{id}}"/>
+        <fieldset>
+            <legend>Datos de la transferencia</legend>
+            <label for="banco">Banco</label>
+            <div class="type-select">
+                <select name="banco">
+                    <option>Seleccione</option>
+                    <option {{ banco == 'banesco' ? 'selected' : '' }}>Banesco</option>
+                    <option {{ banco == 'banco_activo' ? 'selected' : '' }}>Banco Activo</option>
+                </select>
+            </div>
+            <div class="type-text">
+                <label>Voucher</label>
+                <input type="text" name="voucher"/>
+            </div>
+            <div class="type-button">
+                <input type="submit" name="enviar" value="Finalizar"/>
+            </div>
+        </fieldset>
+    </form>
+</div>
+{%endblock%}

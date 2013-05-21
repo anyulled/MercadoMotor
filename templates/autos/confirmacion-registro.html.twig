@@ -1,0 +1,19 @@
+{% extends "layout/base-admin.html.twig"%}
+{% block titulo 'Registro Agregado'%}
+{% block content%}
+<div class="pro_info pro_info_pro_info">
+    <p class="message">
+        <img alt="volver" hspace="3" align="middle" src="../images/info.png"/>
+        <span>Registro agregado con éxito. Su auto está a la espera de ser aprobado.</span>
+    </p>
+</div>
+<div class="floatbox">
+{% include "misc/facebook.html.twig" %}
+</div>
+<div class="floatbox">
+    <center>
+        <img alt="volver" hspace="3" align="middle" src="../images/config.png"/>
+        <a href="../usuarios">Volver al menú</a>
+    </center>
+</div>
+{% endblock %}

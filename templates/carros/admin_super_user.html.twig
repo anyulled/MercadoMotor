@@ -1,0 +1,64 @@
+<table class="pro_table pro_table-bordered pro_table-striped">
+    <caption>
+        <a href="registrar.php">
+            <img alt="Nuevo Registro" align="top" src="../images/add.png" /><span> Nuevo Registro </span> </a>
+        <a href="../usuarios">
+            <img alt="volver" hspace="3" align="top" src="../images/config.png"/>
+            Volver al menú</a>
+            {{ paginado|raw }}
+    </caption>
+    <thead>
+        <tr>
+            <th> <a href="?order=1&dir={{ dir=="DESC"?"ASC":"DESC" }}"> id <img alt="Ordenar"  src="{{ constant('ROOT')~constant('IMAGES')~'toggle.gif' }}" hspace="2" align="top"/></a></th>
+            <th> <a href="?order=2&dir={{ dir=="DESC"?"ASC":"DESC" }}">Precio <img alt="Ordenar"  src="{{ constant('ROOT')~constant('IMAGES')~'toggle.gif' }}" hspace="2" align="top"/></a></th>
+            <th> <a href="?order=4&dir={{ dir=="DESC"?"ASC":"DESC" }}">Marca <img alt="Ordenar"  src="{{ constant('ROOT')~constant('IMAGES')~'toggle.gif' }}" hspace="2" align="top"/></a></th>
+            <th> <a href="?order=5&dir={{ dir=="DESC"?"ASC":"DESC" }}">Modelo <img alt="Ordenar"  src="{{ constant('ROOT')~constant('IMAGES')~'toggle.gif' }}" hspace="2" align="top"/></a></th>
+            <th> <a href="?order=6&dir={{ dir=="DESC"?"ASC":"DESC" }}">Transmisión <img alt="Ordenar"  src="{{ constant('ROOT')~constant('IMAGES')~'toggle.gif' }}" hspace="2" align="top"/></a></th>
+            <th> <a href="?order=7&dir={{ dir=="DESC"?"ASC":"DESC" }}">Dirección <img alt="Ordenar"  src="{{ constant('ROOT')~constant('IMAGES')~'toggle.gif' }}" hspace="2" align="top"/></a></th>
+            <th> <a href="?order=8&dir={{ dir=="DESC"?"ASC":"DESC" }}">Tracción <img alt="Ordenar"  src="{{ constant('ROOT')~constant('IMAGES')~'toggle.gif' }}" hspace="2" align="top"/></a></th>
+            <th> <a href="?order=9&dir={{ dir=="DESC"?"ASC":"DESC" }}">Tipo <img alt="Ordenar"  src="{{ constant('ROOT')~constant('IMAGES')~'toggle.gif' }}" hspace="2" align="top"/></a></th>
+            <th> Acción </th>
+        </tr>
+    </thead>
+    <tbody>
+        {%for carro in carros %}
+        <tr>
+            <td>
+                <a class="adminCarro" name="link{{ carro.idCarro }}" href="#link{{ carro.idCarro }}"> {{ carro.idCarro }}
+                    <img src="{{ constant('ROOT') ~ constant('IMAGES') ~ "carros/" ~ carro.imagen }}" alt="mercadomotor.com"/>
+                </a>
+            </td>
+            <td> {{ carro.precioVehiculo|number_format(0, ',', '.')}} Bsf.</td>
+            <td> {{carro.Marca|title }} </td>
+            <td> {{carro.Modelo|title }} </td>
+            <td> {{carro.transmision }} </td>
+            <td> {{carro.direccion }} </td>
+            <td> {{carro.traccion }} </td>
+            <td> {{carro.tipo }} </td>
+            <td align="right">
+                <a href="editar.php?id={{ carro.idCarro }}"><img alt="Editar" align="absmiddle" src="../images/edit.png" /><span> Editar </span> </a>
+                <a href="#" class="need_confirmation"><img alt="Eliminar" align="absmiddle" src="../images/delete.png" /><span> Eliminar </span> </a>
+            </td>
+        </tr>
+        {% else %}
+        <tr>
+            <td><div class="pro_info pro_info_pro_info">
+                    <p class="message" align="center">
+                        <img src="../images/info.png" align="top" hspace="2" alt="info"/>
+                        No hay resultados que mostrar</p>
+                </div>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="9">
+                <div class="clearBoth">
+                    {{paginado_lista|raw}}
+                </div>
+                <div class="clearBoth">&nbsp;</div>
+            </td>
+        </tr>
+    </tfoot>
+</table>

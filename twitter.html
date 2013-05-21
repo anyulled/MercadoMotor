@@ -1,0 +1,119 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+    <head>
+        <title>Twitter</title>
+        <style type="text/css">
+            input, select{
+                border: 1px solid #f0f0f0;
+                border-radius:3px;
+                box-shadow:1px 1px 3px lightgray;
+                padding:2px;
+            }
+            h1{
+                font-family:sans-serif;
+                text-shadow:0 1px 1px black;
+            }
+            p, a{
+                font-family:sans-serif;
+                font-size: 12px;
+                border: 2px dotted #F0F0F0;
+                border-radius:5px;
+            }
+            a{
+                color:navy;
+                text-decoration: none;
+                padding-left: 5px;
+            }
+        </style>
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
+        <script type="text/javascript">
+
+            $(document).ready(function(){
+                dameListas();
+                $("#username").blur(function(){
+                    dameListas();
+                });
+                $("#listas").change(function(){
+                    list_id = $(this).val();
+                    data = {callback:"dumpTweets", include_entities:true, list_id:list_id,per_page:50};
+                    $.ajax({
+                        url:"https://api.twitter.com/1/lists/statuses.json",
+                        data:data,
+                        type:"GET",
+                        dataType:"jsonp",
+                        mimeType:"json",
+                        beforeSend:function(jqXHR){
+                            console.log("beforeSend");
+                            console.dir(jqXHR);
+                            jqXHR.setRequestHeader("Authorization", "Basic YW55dWxsZWQ6YWxyb3JlY2c=");
+                        },
+                        success:function(data){
+                            console.log("success");
+                            dumpTweets(data);
+                        },
+                        error:function(){
+                            alert("error");
+                        }
+                    });
+                });
+                function dameListas(){
+                    username = $("#username").val();
+                    if(username!=""){
+                        data = {callback:'dumpData',include_entities:true};
+                        url = "https://api.twitter.com/1/"+username+"/lists.json?screen_name="+username;
+                        $.ajax({
+                            url:url,
+                            data:data,
+                            type:"GET",
+                            dataType:'jsonp',
+                            mimeType:"json",
+                            beforeSend:function(jqXHR){
+                                console.log("beforeSend");
+                                console.dir(jqXHR);
+                                jqXHR.setRequestHeader("Authorization", "Basic YW55dWxsZWQ6YWxyb3JlY2c=");
+                            },
+                            success:function(data){
+                                console.log("success");
+                                dumpData(data.lists);
+                            },
+                            error:function(){
+                                alert("error");
+                            }
+                
+                        });
+                    }
+                }
+                function dumpData(lista){
+                    $("#listas option").remove();
+                    $("<option value=''>Seleccione &raquo;</option>").appendTo("#listas");
+                    $.each(lista, function(key,value){
+                        $("<option value='"+value.id_str+"'>"+value.full_name+"</option>").appendTo("#listas");
+                    });
+                }
+                function dumpTweets(tweets){
+                    $("#tweets").html("");
+                    $.each(tweets,function(key,value){
+                        $("<p/>",{html: key+" : <b>"+value.user.screen_name +"</b> &raquo; "+ value.text}).appendTo("#tweets");
+                        if(value.entities.urls.length>0){
+                            $.each(value.entities.urls,function(key,value){
+                                $("<a/>",{text:value.display_url,href:value.expanded_url,target:"_blank"}).appendTo("#tweets");
+                            });
+                        }
+                    });
+                }
+            });
+        </script>
+    </head>
+    <body>
+        <div>
+            <h1><em>Buzo de imágenes</em></h1>
+            <input type="text" name="username" id="username" value="anyulled"/>
+            <div id="content">
+                <select name="listas" id="listas">
+                    <option>Seleccione &raquo;</option>
+                </select>
+                <div id="tweets"></div>
+            </div>
+        </div>
+    </body>
+</html>

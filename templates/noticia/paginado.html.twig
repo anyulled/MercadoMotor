@@ -1,0 +1,54 @@
+{% extends 'base-admin.html.twig' %}
+{% block titulo 'Listado de noticias' %}
+{% block includes %}
+<script type="text/javascript">
+    $(document).ready(function(){
+        $(".need_confirm").click(function(){
+            return confirm("Confirma que desea borrar esta noticia?");
+        });
+    });
+    </script>
+{% endblock %}
+{% block content %}
+    <table width="100%" class="full">
+        <thead>
+            <tr>
+                <th>id</th>
+                <th>status</th>
+                <th>titulo</th>
+                <th>fecha publicada</th>
+                <th>vistas</th>
+                <th>acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for noticia in noticias %}
+                <tr>
+                    <td>{{ noticia.id}}</td>
+                    <td>{{ noticia.status == 1 ? "Activa" : " Inactiva" }}</td>
+                    <td>{{ noticia.titulo}}</td>
+                    <td>{{ noticia.fecha|date("d/m/Y")}}</td>
+                    <td>{{ noticia.vistas}}</td>
+                    <td>
+                        <a href="admin.php?accion=editar&id={{ noticia.id }}">Editar</a> |
+                        <a class="need_confirm" href="admin.php?accion=eliminar&id={{ noticia.id }}">Eliminar</a>
+                    </td>
+                </tr>
+        {% else %}
+                <tr>
+                    <td colspan="6">no se encontraron registros </td>
+                </tr>
+        {% endfor %}
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="6" align="center">
+                        <a href="admin.php?accion=crear">Agregar noticia</a>
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+    <div>
+    {{ paginado|raw }}
+    </div>
+{% endblock %}

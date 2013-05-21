@@ -1,0 +1,113 @@
+{%extends 'layout/base.html.twig' %}
+{% block titulo %} Registrar Usuario {% endblock %}
+
+{% block includes %}
+<script type="text/javascript" src="{{ constant('ROOT')}}/js/lib/jquery-validate/jquery.validate.pack.js"></script>
+<script type="text/javascript" src="{{ constant('ROOT')}}/js/lib/jquery-validate/localization/messages_es.js"></script>
+<script type="text/javascript">
+    $(document).ready(function(){
+        $("#pro_form1").validate();
+        llenarEstados("#estados");
+        $("#password2").rules('add',{
+            equalTo:"#password",
+            messsages:{
+                equalTo:"La contraseña no coincide"
+            }
+        });
+    });
+    </script>
+{% endblock %}
+
+{%block content %}
+{% if result %}
+    <div class="pro_info pro_info_pro_info">
+        <p>Registro creado con éxito, ya puede iniciar sesión</p>
+    </div>
+{% else %}
+{% if mensaje|length >0 %}
+    <div class="pro_info pro_info_important">
+        <label>Error</label>
+            {% for error in mensaje %}
+        <p class="message">{{ error}} </p>
+            {% endfor %}
+    </div>
+{% endif %}
+    <form id="pro_form1" action="registrar.php" method="post" name="registro">
+        <fieldset>
+            <legend>Datos Personales</legend>
+            <label for="nombre">
+                <span class="pro_text-form">Nombre<sup>*</sup></span>
+                <input type="text" name="nombre"  class="required"/>
+            </label>
+            <label for="apellido">
+                <span class="pro_text-form">Apellido<sup>*</sup> </span>
+                <input type="text" name="apellido"  class="required"/>
+            </label>
+            <label for="id">
+                <span class="pro_text-form">Cédula/Rif</span>
+                <select name="tipoid"  class="required min">
+                    <option>V</option>
+                    <option>E</option>
+                    <option>J</option>
+                </select>
+                <input type="text" name="numeroid" style="width:200px; display:inline;"/>
+            </label>
+            <label for="telefono">
+                <span class="pro_text-form">Teléfono<sup>*</sup> </span>
+                <input type="text" name="telefono"  class="required"/>
+            </label>
+            <label for="telefono2">
+                <span class="pro_text-form">Teléfono 2</span>
+                <input type="text" name="telefono2"/>
+            </label>
+            <label for="estado">
+                <span class="pro_text-form">Estado<sup>*</sup> </span>
+                <select name="estado" id="estados"  class="required">
+                    <option> - Seleccione</option>
+                </select>
+            </label>
+            <label for="ciudad">
+                <span class="pro_text-form">Ciudad<sup>*</sup> </span>
+                <select name="ciudad" id="ciudad"  class="required">
+                    <option> - Seleccione</option>
+                </select>
+            </label>
+            <label for="direccion">
+                <span class="pro_text-form">Dirección <sup>*</sup></span>
+                <textarea name="direccion" cols="5" rows="3"  class="required"></textarea>
+            </label>
+        </fieldset>
+        <fieldset>
+            <legend>Datos de su Cuenta</legend>
+            <div class="type-text">
+                <label for="usuario">
+                    <span class="pro_text-form">Usuario <sup>*</sup> </span>
+                    <input type="text" name="usuario"  class="required"/>
+                </label>
+            </div>
+            <div class="type-text">
+                <label for="password">
+                    <span class="pro_text-form">Password <sup>*</sup></span>
+                    <input type="password" name="password"  class="required" id="password"/>
+                </label>
+            </div>
+            <div class="type-text">
+                <label for="password2"  class="required">
+                    <span class="pro_text-form">Repita su password:</span>
+                    <input type="password" name="password2" id="password2"/>
+                </label>
+            </div>
+            <div class="type-text">
+                <label>
+                    <span class="pro_text-form">Email:<sup>*</sup></span>
+                <input type="text" class="required email"/>
+                </label>
+            </div>
+            <div class="type-button">
+                <center><input class="pro_btn" type="submit" name="enviar" value="Enviar"/></center>
+            </div>
+        </fieldset>
+    </form>
+{%endif %}
+{% endblock %}
+

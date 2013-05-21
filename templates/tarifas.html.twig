@@ -1,0 +1,19 @@
+{% extends 'layout/base.html.twig' %}
+{% block titulo 'Tarifas'%}
+
+{% block content %}
+<div class="anuncio">
+    <h3>Publicación de Vehículos</h3>
+    <p><b>Precio:</b> 180 Bsf</p>
+    <p><b>Duración:</b> hasta que lo vendas</p>
+    <p><b>Al ser activada tu publicación será vista en:</b></p>
+    <ul>
+        <li> Nuestra web www.mercadomotor.com.ve</li>
+        <li> Nuestro facebook <a href="http://www.facebook.com/mercadomotor"><img src="{{ constant ('ROOT') ~ constant('IMAGES')~"facebook_logo.png"}}"/></a></li>
+        <li> Nuestro Twitter <a href="http://www.twitter.com/mercadomotor"><img src="{{ constant ('ROOT') ~ constant('IMAGES')~"twitter_logo.jpg"}}"/></a></li>
+    </ul>
+    <p><b>Puedes modificar tu anuncio la veces que quieras</b></p>
+    <b><a class="pro_btn" class="publicar" href="{{ constant('ROOT') }}/login.php">Publicar</a></b>
+
+</div>
+{% endblock %}

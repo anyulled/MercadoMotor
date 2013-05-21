@@ -1,0 +1,198 @@
+{% extends 'simple.html.twig' %}
+{% block titulo %}
+{{ tituloAuto|title }}
+{% endblock%}
+{% block content %}
+{% if datos_carro|length > 0 %}
+<div id="col2_content">
+    <div class="float_right">{{ 'Anuncio #' ~ datos_carro.idCarro}}</div>
+    <h2 style="margin-top:3px; font-weight: bold;">{{tituloAuto|title }}</h2>
+    <div class="skin-slidedeck">
+        <dl id="slidedeck" style="height: 400px;" class="slidedeck">
+            <dt>Fotos</dt>
+            <dd>
+                <div id="cycle" class="c75l">
+                    <a href="#" id="prev">&laquo;</a>
+                    {% for imagen in datos_carro.images %}
+                    <img src="{{ constant('ROOT') ~ constant('IMAGES_CARROS') ~ imagen.urlImagen }}"/>
+                    {% else %}
+                    <p>No hay imágenes disponibles</p>
+                    {% endfor %}
+                    <a href="#" id="next">&raquo;</a>
+                </div>
+                <div id="thumbs" class="c25r">
+                    &nbsp;
+                </div>
+                <div id="share" class="c25r">
+                    <br/>
+                    <p style="font-weight: bold; text-align: center; white-space: nowrap;">Comparte esta página</p>
+                    <div class="addthis_toolbox addthis_default_style addthis_32x32_style" style="padding:3px;">
+                        <a class="addthis_button_preferred_1"></a>
+                        <a class="addthis_button_preferred_3"></a>
+                        <a class="addthis_button_preferred_2"></a>
+                        <a class="addthis_button_preferred_4"></a>
+                        <a class="addthis_button_compact"></a>
+                        <a class="addthis_counter addthis_bubble_style"></a>
+                    </div>
+                    <div>
+                    {% if datos_carro.vendido %}
+                            <img src="{{ constant('ROOT') ~ constant('IMAGES')}}/vendido_big.png" />
+                    {%endif %}
+                    </div>
+                    <script type="text/javascript">var addthis_config = {"data_track_clickback":true};</script>
+                    <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid=ra-4e1b7acc2fb3ee4e"></script>
+                </div>
+            </dd>
+            <dt>Especificaciones</dt>
+            <dd>
+                <div>
+                    <table class="full">
+                        <tbody>
+                            <tr>
+                                <th width="50%"> Marca </th>
+                                <td> {{datos_carro.marca|title}} </td>
+                            </tr>
+                            <tr>
+                                <th> Modelo </th>
+                                <td> {{datos_carro.modelo|title}} </td>
+                            </tr>
+                            <tr>
+                                <th>Versión </th>
+                                <td>{{datos_carro.version}} </td>
+                            </tr>
+                            <tr>
+                                <th> Año </th>
+                                <td> {{datos_carro.anio}}  </td>
+                            </tr>
+                            <tr>
+                                <th> Transmisión </th>
+                                <td> {{datos_carro.transmision}} </td>
+                            </tr>
+                            <tr>
+                                <th>Kilometros</th>
+                                <td>Contacte al vendedor</td>
+                            </tr>
+                            <tr>
+                                <th>Tipo de Vehículo</th>
+                                <td>{{datos_carro.tipo}} </td>
+                            </tr>
+                            <!--<tr>
+                                <th>Modelo del vehículo</th>
+                                <td><?php // echo $datos_carro['modeloVehiculo'];         ?></td>
+                            </tr>-->
+                            <tr>
+                                <th>Color</th>
+                                <td>{{datos_carro.color}}</td>
+                            </tr>
+                            <!--<tr>
+                                <th>Placa</th>
+                                <td><?php // echo strtoupper($datos_carro['placa']);         ?></td>
+                            </tr>-->
+                            <tr>
+                                <th>Motor</th>
+                                <td>{{datos_carro.motor}}</td>
+                            </tr>
+                            <tr>
+                                <th>Cilindros</th>
+                                <td>{{datos_carro.cilindros}}</td>
+                            </tr>
+                            <tr>
+                                <th> Tracción</th>
+                                <td>{{datos_carro.traccion}}</td>
+                            </tr>
+                            <tr>
+                                <th align="center"> Precio </th>
+                                <td align="center">{{datos_carro.precio|number_format( 0, ',', '.')}} Bsf.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </dd>
+            <dt>Extras</dt>
+            <dd>
+                <div>
+                    <table class="full">
+                        <tbody>
+                            <tr>
+                                <th align="center">Vidrios Ahumados</th>
+                                <td>{{(datos_carro.vidriosAhumados == 1) ? ' Si ' : ' No '}}</td>
+                            </tr>
+                            <tr>
+                                <th align="center">Tapizado</th>
+                                <td>{{(datos_carro['tapizado'] == 1) ? ' Cuero ' : ' Tela '}}</td>
+                            </tr>
+                            <tr>
+                                <th align="center">Airbag</th>
+                                <td>{{(datos_carro.airbag== 1) ? ' Si ' : ' No '}}</td>
+                            </tr>
+                            <tr>
+                                <th align="center"> Frenos ABS </th>
+                                <td>{{(datos_carro.frenosAbs == 1) ? ' Si ' : ' No '}}</td>
+                            </tr>
+                            <tr>
+                                <th align="center"> Aire Acondicionado </th>
+                                <td>{{(datos_carro.aireAcondicionado == 1) ? ' Si ' : ' No '}}</td>
+                            </tr>
+                            <tr>
+                                <th align="center"> Sonido </th>
+                                <td>{{(datos_carro.sonido == 1) ? 'Estero' : 'Normal'}}</td>
+                            </tr>
+                            <tr>
+                                <th align="center"> Blindado </th>
+                                <td>{{(datos_carro.blindado == 1) ? 'Si' : 'No'}}</td>
+                            </tr>
+                            <tr>
+                                <th align="center"> Dirección </th>
+                                <td>{{datos_carro.direccionVehiculo}}</td>
+                            </tr>
+                            <tr>
+                                <th align="center"> Negociable </th>
+                                <td>{{(datos_carro.negociable== 1) ? ' Si ' : ' No '}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div> 
+            </dd>
+            <dt>Contacta al vendedor</dt>
+            <dd>
+                <div>
+                    <table class="full">
+                        <tr>
+                            <th>Direcci&oacute;n</th>
+                            <td>{{datos_usuario.direccion|capitalize ~ " - " ~ datos_usuario.ciudad|title ~ ", " ~ datos_usuario.Estado|title}}</td>
+                        </tr>
+                        <tr>
+                            <th width="50%"  align="center">Teléfono 1</th>
+                            <td align="center">{{datos_usuario.telefono1}}</td>
+                        </tr>
+                        <tr>
+                            <th align="center">Teléfono 2</th>
+                            <td align="center">{{datos_usuario.telefono2}}</td>
+                        </tr>
+
+                    </table>
+                </div>
+            </dd>
+            <dt>Informacion adicional</dt>
+            <dd>
+                <div class="info">
+                                            {{datos_carro.comentario|capitalize}}
+                    </div>
+                    <div class="info">
+                        <p><b>BUSCO CARRO JMC 3000 C.A.</b> sólo se limita a la publicación y/o alojamiento de avisos clasificados en los términos contratados por el cliente aquí identificado y no será responsable por la información contenida en este aviso ya que ha sido suministrada y corroborada por el usuario contratante, ni por daños o perjuicios que pudiere sufrir el visitante por operaciones sobre anuncios publicados en el sitio.</p>
+                    </div>
+                </dd>
+            </dl>
+        </div>
+</div>
+{% else %}
+<div class="floatbox grande">
+    <div class="pro_info pro_info_pro_info">
+        <p class="message">
+            <img src="{{constant('ROOT') ~ constant('IMAGES')~"error.png"}}" alt="error" hspace="2" align="top"/>
+            Hubo un error al conectar con la base de datos. Por favor intente de nuevo
+        </p>
+    </div>
+</div>
+{% endif %}
+{% endblock %}
